@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -8,22 +10,18 @@ public class LeetCode1 {
 
     private static final int maxPoolThreadNum = coreThreadNum * 2;
 
-    public static final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
+    public static final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>(10);
 
     public static ThreadPoolExecutor threadPool = new ThreadPoolExecutor(coreThreadNum, maxPoolThreadNum, 3L,
             TimeUnit.SECONDS, workQueue, new CustomThreadFactory("worker-test-"),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello World!");
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 2000; i++) {
+            int fn = i;
             threadPool.execute(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    System.out.println("InterruptedException" + e);
-                }
-                System.out.println(Thread.currentThread().getName());
+                System.out.println("[" + fn + "]队列数量=" + workQueue.size() + "------线程名称=" + Thread.currentThread().getName());
             });
         }
         threadPool.shutdown();
@@ -46,5 +44,22 @@ public class LeetCode1 {
             thread.setUncaughtExceptionHandler((t, e) -> System.err.println("Thread " + t.getName() + " failed: " + e));
             return thread;
         }
+    }
+
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> ans = new ArrayList<>();
+        int cur = 1;
+        for (int i = 0; i < n; i++) {
+            ans.add(cur);
+            if (cur * 10 < n) {
+                cur *= 10;
+            } else {
+                while (cur % 10 == 9 || cur + 1 > n) {
+                    cur /= 10;
+                }
+                cur++;
+            }
+        }
+        return ans;
     }
 }
