@@ -16,6 +16,8 @@ public class LeetCode1 {
             TimeUnit.SECONDS, workQueue, new CustomThreadFactory("worker-test-"),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
+    private volatile int count = 0;
+
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello World!");
         for (int i = 0; i < 20; i++) {
