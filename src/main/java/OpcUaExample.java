@@ -1,12 +1,7 @@
-package main.java;
-
-
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
-import org.eclipse.milo.opcua.stack.core.types.builtin.Variant;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 
-import java.util.concurrent.CompletableFuture;
 
 public class OpcUaExample {
     public static void main(String[] args) throws Exception {

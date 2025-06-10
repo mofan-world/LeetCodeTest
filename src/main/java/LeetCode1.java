@@ -18,13 +18,36 @@ public class LeetCode1 {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello World!");
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 20; i++) {
             int fn = i;
             threadPool.execute(() -> {
                 System.out.println("[" + fn + "]队列数量=" + workQueue.size() + "------线程名称=" + Thread.currentThread().getName());
             });
         }
         threadPool.shutdown();
+        System.out.println((int)'a');
+        System.out.println((int)'A');
+    }
+
+    public int maxDifference(String s) {
+        int maxj = 0, minj = 100, maxo = 0, mino = 100, cur = 0;
+        for (int i = 0; i < 26; i++) {
+            cur = countChar(s, (char) ('a' + i));
+            if (cur % 2 == 1) {
+                maxj = Math.max(maxj, cur);
+                minj = Math.min(minj, cur);
+            }
+            if (cur != 0 && cur % 2 == 0) {
+                maxo = Math.max(maxo, cur);
+                mino = Math.min(mino, cur);
+            }
+        }
+        return Math.max(minj - maxo, maxj - mino);
+    }
+
+    public static long countChar(String str, char target) {
+        return str.chars()
+                .filter(c -> c == target).count();
     }
 
     private static class CustomThreadFactory implements ThreadFactory {
