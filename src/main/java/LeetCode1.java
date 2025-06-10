@@ -71,6 +71,15 @@ public class LeetCode1 {
         }
     }
 
+    public int[] distributeCandies(int candies, int num_people) {
+        int[] ans = new int[num_people];
+        for (int i = 1; candies > 0; i++) {
+            ans[(i - 1) % num_people] += Math.min(i, candies);
+            candies -= i;
+        }
+        return ans;
+    }
+
     public List<Integer> lexicalOrder(int n) {
         List<Integer> ans = new ArrayList<>();
         int cur = 1;
